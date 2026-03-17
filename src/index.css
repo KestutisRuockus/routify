@@ -1,6 +1,23 @@
+:root {
+  --text-primary: #1e293b;
+  --text-secondary: #989ea7;
+
+  --bg-base: #e2e8f0;
+  --bg-secondary: #cbd5e1;
+  --bg-elevated: #f1f5f9;
+
+  --accent: #478bf8;
+
+  --border: #94a3b8;
+
+  --success: #16a34a;
+  --error: #dc2626;
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: var(--bg-base);
 }

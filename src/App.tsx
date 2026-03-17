@@ -1,17 +1,24 @@
-import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/home/Home";
+import SavedRoutes from "./pages/SavedRoutes";
+import Planner from "./pages/Planner";
+import Layout from "./components/Layout";
+import "./index.css";
+import { AppProvider } from "./context/AppProvider";
 
 function App() {
   return (
-    <div style={{ height: "100vh" }}>
-      <MapContainer
-        center={[54.8985, 23.9036]}
-        zoom={13}
-        style={{ height: "100%" }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      </MapContainer>
-    </div>
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/planner" element={<Planner />} />
+            <Route path="/saved" element={<SavedRoutes />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AppProvider>
   );
 }
 
