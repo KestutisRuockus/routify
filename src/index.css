@@ -12,6 +12,8 @@
 
   --success: #16a34a;
   --error: #dc2626;
+
+  --navbar-height: 48px;
 }
 
 html,
@@ -19,5 +21,6 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   background-color: var(--bg-base);
 }

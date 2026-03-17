@@ -1,5 +1,5 @@
 nav {
-  height: 48px;
+  height: var(--navbar-height);
   padding: 0 5%;
   background-color: var(--bg-secondary);
   display: flex;
