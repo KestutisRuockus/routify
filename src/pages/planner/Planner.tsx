@@ -1,9 +1,15 @@
-import { useAppContext } from "../../context/AppContext";
+import Map from "../../components/Map";
+import "./planner.css";
 
 const Planner = () => {
-  const { waypoints } = useAppContext();
-  console.log(waypoints);
-  return <div>Planner</div>;
+  return (
+    <main className="planner-main">
+      <Map selectedLocation={null} />
+      <aside className="planner-panel">
+        <h1 className="planner-title">Route Planner</h1>
+      </aside>
+    </main>
+  );
 };
 
 export default Planner;

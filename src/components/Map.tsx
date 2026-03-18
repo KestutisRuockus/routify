@@ -16,6 +16,7 @@ const Map = ({ selectedLocation }: Props) => {
 
   const { waypoints, setWaypoints } = useAppContext();
   const navigate = useNavigate();
+  console.log(waypoints);
 
   const handleAddToPlanner = () => {
     if (selectedLocation) {
