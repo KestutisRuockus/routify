@@ -1,6 +1,7 @@
 .search-section {
   width: fit-content;
   margin: auto;
+  margin-bottom: 12px;
   background-color: var(--bg-secondary);
   padding: 12px 36px;
   border-radius: 4px;

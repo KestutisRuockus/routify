@@ -15,6 +15,7 @@ const SearchInput = ({ setSelectedLocation }: Props) => {
 
   const handleClick = (location: NominatimResult) => {
     setSelectedLocation({
+      id: location.place_id,
       coordinates: [parseFloat(location.lat), parseFloat(location.lon)],
       name: location.display_name,
     });

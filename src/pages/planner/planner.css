@@ -7,7 +7,6 @@
 .planner-panel {
   width: 320px;
   background-color: var(--bg-secondary);
-  padding: 16px;
   overflow-y: auto;
   margin-left: 24px;
 }
@@ -15,4 +14,47 @@
 .planner-title {
   text-align: center;
   color: var(--text-primary);
+}
+
+.planner-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  padding: 0 12px;
+}
+
+.planner-list-item {
+  background-color: var(--bg-elevated);
+  padding: 12px;
+  font-size: 0.8rem;
+  padding-right: 20px;
+  position: relative;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.planner-list-delete-item {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+  padding: 1px 4px;
+  transition: opacity 0.3s ease;
+  border-radius: 2px;
+  color: var(--text-primary);
+}
+
+.planner-list-delete-item:hover {
+  opacity: 0.7;
+}
+
+.no-locations {
+  text-align: center;
+}
+
+.planner-list-item-active {
+  background-color: var(--accent);
+  color: white;
 }
