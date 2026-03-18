@@ -1,10 +1,10 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import type { Waypoint } from "../types/types";
 import "./searchInput.css";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import useNominatim, { type NominatimResult } from "../hooks/useNominatim";
-import type { SelectedLocation } from "../pages/home/Home";
 
 type Props = {
-  setSelectedLocation: Dispatch<SetStateAction<SelectedLocation>>;
+  setSelectedLocation: Dispatch<SetStateAction<Waypoint | null>>;
 };
 
 const SearchInput = ({ setSelectedLocation }: Props) => {

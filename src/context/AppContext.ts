@@ -1,7 +1,15 @@
-import { createContext, useContext } from "react";
+import type { Waypoint } from "../types/types";
+import {
+  createContext,
+  useContext,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-type AppContextType = {};
+type AppContextType = {
+  waypoints: Waypoint[];
+  setWaypoints: Dispatch<SetStateAction<Waypoint[]>>;
+};
 
 export const AppContext = createContext<AppContextType | null>(null);
 

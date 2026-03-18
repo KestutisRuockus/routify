@@ -1,5 +1,13 @@
+import { useState } from "react";
+import type { Waypoint } from "../types/types";
 import { AppContext } from "./AppContext";
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  return <AppContext.Provider value={{}}>{children}</AppContext.Provider>;
+  const [waypoints, setWaypoints] = useState<Waypoint[]>([]);
+
+  return (
+    <AppContext.Provider value={{ waypoints, setWaypoints }}>
+      {children}
+    </AppContext.Provider>
+  );
 };

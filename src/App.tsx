@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./pages/home/Home";
-import SavedRoutes from "./pages/SavedRoutes";
-import Planner from "./pages/Planner";
+import SavedRoutes from "./pages/savedRoutes/SavedRoutes";
+import Planner from "./pages/planner/Planner";
 import Layout from "./components/Layout";
 import "./index.css";
 import { AppProvider } from "./context/AppProvider";
