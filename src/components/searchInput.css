@@ -4,6 +4,7 @@
   background-color: var(--bg-secondary);
   padding: 12px 36px;
   border-radius: 4px;
+  position: relative;
 }
 
 .search-input-wrapper {
@@ -44,4 +45,27 @@
 
 .search-input-button:hover {
   background-color: color-mix(in srgb, var(--bg-secondary) 60%, transparent);
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.search-dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.search-dropdown-item:hover {
+  background-color: var(--bg-secondary);
 }
