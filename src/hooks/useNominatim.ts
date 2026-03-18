@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useDebounce from "./useDebounce ";
 
-type NominatimResult = {
+export type NominatimResult = {
   place_id: number;
   lat: string;
   lon: string;
