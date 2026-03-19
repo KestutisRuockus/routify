@@ -1,7 +1,13 @@
 import "leaflet/dist/leaflet.css";
 import "./map.css";
 import type { Waypoint } from "../types/types";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 import MapCenter from "./MapCenter";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { useAppContext } from "../context/AppContext";
@@ -12,6 +18,7 @@ type Props = {
   selectedLocation: Waypoint | null;
   isPlannerPage?: boolean;
   markedWaypoint?: Waypoint;
+  onMapClick?: (coords: [number, number]) => void;
 };
 
 const createPinIcon = (color: string) =>
@@ -29,10 +36,24 @@ const createPinIcon = (color: string) =>
 const defaultPin = createPinIcon("#3b82f6");
 const activePin = createPinIcon("#16a34a");
 
+const MapClickHandler = ({
+  onMapClick,
+}: {
+  onMapClick: (coords: [number, number]) => void;
+}) => {
+  useMapEvents({
+    click(e) {
+      onMapClick([e.latlng.lat, e.latlng.lng]);
+    },
+  });
+  return null;
+};
+
 const Map = ({
   selectedLocation,
   isPlannerPage = false,
   markedWaypoint,
+  onMapClick,
 }: Props) => {
   const { coordinates, loading } = useGeolocation();
   const { waypoints, setWaypoints } = useAppContext();
@@ -85,6 +106,7 @@ const Map = ({
               <Popup>{waypoint.name}</Popup>
             </Marker>
           ))}
+        {onMapClick && <MapClickHandler onMapClick={onMapClick} />}
       </MapContainer>
     </section>
   );

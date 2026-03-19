@@ -3,6 +3,7 @@ import Map from "../../components/Map";
 import { useAppContext } from "../../context/AppContext";
 import "./planner.css";
 import type { Waypoint } from "../../types/types";
+import { reverseGeocode } from "../../utils/geocoding";
 
 const Planner = () => {
   const { waypoints, setWaypoints } = useAppContext();
@@ -17,12 +18,18 @@ const Planner = () => {
     }
   };
 
+  const handleMapClick = async (coords: [number, number]) => {
+    const location = await reverseGeocode(coords);
+    setWaypoints([...waypoints, location]);
+  };
+
   return (
     <main className="planner-main">
       <Map
         selectedLocation={null}
         isPlannerPage={true}
         markedWaypoint={markedWaypoint ?? undefined}
+        onMapClick={handleMapClick}
       />
       <aside className="planner-panel">
         <h1 className="planner-title">Route Planner</h1>
