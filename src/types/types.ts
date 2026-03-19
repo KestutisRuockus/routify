@@ -3,3 +3,9 @@ export type Waypoint = {
   coordinates: [number, number];
   name: string;
 };
+
+export type RouteResult = {
+  coords: [number, number][];
+  distance: number;
+  duration: number;
+};

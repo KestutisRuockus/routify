@@ -17,3 +17,22 @@
   overflow: hidden;
   display: flex;
 }
+
+.home-route-details {
+  width: 320px;
+  padding: 12px 0;
+  background-color: var(--bg-secondary);
+  margin: auto;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.home-route-details p {
+  font-size: 1rem;
+  line-height: 1rem;
+  margin: 0;
+}

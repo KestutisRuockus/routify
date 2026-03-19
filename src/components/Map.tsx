@@ -7,9 +7,9 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  Polyline,
 } from "react-leaflet";
 import MapCenter from "./MapCenter";
-import { useGeolocation } from "../hooks/useGeolocation";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import L from "leaflet";
@@ -19,6 +19,8 @@ type Props = {
   isPlannerPage?: boolean;
   markedWaypoint?: Waypoint;
   onMapClick?: (coords: [number, number]) => void;
+  routeCoords?: [number, number][] | null;
+  userCoordinates?: [number, number];
 };
 
 const createPinIcon = (color: string) =>
@@ -54,8 +56,9 @@ const Map = ({
   isPlannerPage = false,
   markedWaypoint,
   onMapClick,
+  routeCoords,
+  userCoordinates,
 }: Props) => {
-  const { coordinates, loading } = useGeolocation();
   const { waypoints, setWaypoints } = useAppContext();
   const navigate = useNavigate();
 
@@ -77,9 +80,12 @@ const Map = ({
         zoom={13}
         style={{ height: "100%", width: "100%" }}
       >
-        {!loading && !isPlannerPage && (
+        {!isPlannerPage && (
           <MapCenter
-            coordinates={selectedLocation?.coordinates ?? coordinates}
+            coordinates={
+              selectedLocation?.coordinates ??
+              userCoordinates ?? [55.1694, 23.8813]
+            }
           />
         )}
         {isPlannerPage && markedWaypoint && (
@@ -107,6 +113,9 @@ const Map = ({
             </Marker>
           ))}
         {onMapClick && <MapClickHandler onMapClick={onMapClick} />}
+        {routeCoords && (
+          <Polyline positions={routeCoords} color="#3b82f6" weight={4} />
+        )}
       </MapContainer>
     </section>
   );

@@ -1,14 +1,15 @@
 import type { Waypoint } from "../types/types";
 import "./searchInput.css";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import useNominatim, { type NominatimResult } from "../hooks/useNominatim";
 
 type Props = {
   setSelectedLocation: Dispatch<SetStateAction<Waypoint | null>>;
+  selectedLocationName?: string;
 };
 
-const SearchInput = ({ setSelectedLocation }: Props) => {
-  const [inputValue, setInputValue] = useState("");
+const SearchInput = ({ setSelectedLocation, selectedLocationName }: Props) => {
+  const [inputValue, setInputValue] = useState(selectedLocationName ?? "");
   const [isFocused, setIsFocused] = useState(false);
 
   const { result } = useNominatim(inputValue);
@@ -22,6 +23,11 @@ const SearchInput = ({ setSelectedLocation }: Props) => {
     setInputValue(location.display_name);
     setIsFocused(false);
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setInputValue(selectedLocationName ?? "");
+  }, [selectedLocationName]);
 
   return (
     <section
