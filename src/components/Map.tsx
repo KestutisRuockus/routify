@@ -21,6 +21,8 @@ type Props = {
   onMapClick?: (coords: [number, number]) => void;
   routeCoords?: [number, number][] | null;
   userCoordinates?: [number, number];
+  setSelectedLocation?: (waypoint: Waypoint | null) => void;
+  setMarkedWaypoint?: (waypoint: Waypoint | null) => void;
 };
 
 const createPinIcon = (color: string) =>
@@ -37,6 +39,7 @@ const createPinIcon = (color: string) =>
 
 const defaultPin = createPinIcon("#3b82f6");
 const activePin = createPinIcon("#16a34a");
+const temporaryPin = createPinIcon("#d43a3a");
 
 const MapClickHandler = ({
   onMapClick,
@@ -58,6 +61,8 @@ const Map = ({
   onMapClick,
   routeCoords,
   userCoordinates,
+  setSelectedLocation,
+  setMarkedWaypoint,
 }: Props) => {
   const { waypoints, setWaypoints } = useAppContext();
   const navigate = useNavigate();
@@ -66,6 +71,8 @@ const Map = ({
     if (selectedLocation) {
       setWaypoints([...waypoints, selectedLocation]);
       navigate("/planner");
+      setSelectedLocation?.(null);
+      setMarkedWaypoint?.(selectedLocation);
     }
   };
 
@@ -93,12 +100,31 @@ const Map = ({
         )}
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {selectedLocation && (
-          <Marker position={selectedLocation.coordinates}>
+          <Marker position={selectedLocation.coordinates} icon={temporaryPin}>
             <Popup>
               {selectedLocation.name}
-              <button type="button" onClick={handleAddToPlanner}>
-                Add to Planner
-              </button>
+              <div className="map-popup">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToPlanner();
+                  }}
+                >
+                  Add to Planner
+                </button>
+                {isPlannerPage && selectedLocation && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedLocation?.(null);
+                    }}
+                  >
+                    Remove marker
+                  </button>
+                )}
+              </div>
             </Popup>
           </Marker>
         )}
@@ -108,6 +134,7 @@ const Map = ({
               key={waypoint.id}
               position={waypoint.coordinates}
               icon={waypoint.id === markedWaypoint?.id ? activePin : defaultPin}
+              eventHandlers={{ click: () => setMarkedWaypoint?.(waypoint) }}
             >
               <Popup>{waypoint.name}</Popup>
             </Marker>
@@ -115,6 +142,9 @@ const Map = ({
         {onMapClick && <MapClickHandler onMapClick={onMapClick} />}
         {routeCoords && (
           <Polyline positions={routeCoords} color="#3b82f6" weight={4} />
+        )}
+        {isPlannerPage && selectedLocation && (
+          <MapCenter coordinates={selectedLocation.coordinates} />
         )}
       </MapContainer>
     </section>

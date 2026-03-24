@@ -9,7 +9,11 @@ const MapCenter = ({ coordinates }: Props) => {
   const map = useMap();
 
   useEffect(() => {
-    map.setView(coordinates, 13);
+    const timer = setTimeout(() => {
+      map.setView(coordinates, map.getZoom());
+    }, 50);
+
+    return () => clearTimeout(timer);
   }, [coordinates, map]);
 
   return null;

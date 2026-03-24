@@ -1,21 +1,21 @@
 import type { Waypoint } from "../types/types";
 import "./searchInput.css";
-import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState } from "react";
 import useNominatim, { type NominatimResult } from "../hooks/useNominatim";
 
 type Props = {
-  setSelectedLocation: Dispatch<SetStateAction<Waypoint | null>>;
+  onSelect: (waypoint: Waypoint) => void;
   selectedLocationName?: string;
 };
 
-const SearchInput = ({ setSelectedLocation, selectedLocationName }: Props) => {
+const SearchInput = ({ onSelect, selectedLocationName }: Props) => {
   const [inputValue, setInputValue] = useState(selectedLocationName ?? "");
   const [isFocused, setIsFocused] = useState(false);
 
   const { result } = useNominatim(inputValue);
 
   const handleClick = (location: NominatimResult) => {
-    setSelectedLocation({
+    onSelect({
       id: location.place_id,
       coordinates: [parseFloat(location.lat), parseFloat(location.lon)],
       name: location.display_name,

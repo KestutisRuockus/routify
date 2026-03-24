@@ -4,11 +4,15 @@ import { useAppContext } from "../../context/AppContext";
 import "./planner.css";
 import type { Waypoint } from "../../types/types";
 import { reverseGeocode } from "../../utils/geocoding";
+import SearchInput from "../../components/SearchInput";
 
 const Planner = () => {
   const { waypoints, setWaypoints } = useAppContext();
   const [markedWaypoint, setMarkedWaypoint] = useState<Waypoint | null>(
     waypoints[0] ?? null,
+  );
+  const [selectedLocation, setSelectedLocation] = useState<Waypoint | null>(
+    null,
   );
 
   const handleDelete = (id: number) => {
@@ -16,23 +20,33 @@ const Planner = () => {
     if (markedWaypoint?.id === id) {
       setMarkedWaypoint(null);
     }
+    if (selectedLocation?.id === id) {
+      setSelectedLocation(null);
+    }
   };
 
   const handleMapClick = async (coords: [number, number]) => {
     const location = await reverseGeocode(coords);
-    setWaypoints([...waypoints, location]);
+    setSelectedLocation(location);
+  };
+
+  const handleSelect = (waypoint: Waypoint) => {
+    setSelectedLocation(waypoint);
   };
 
   return (
     <main className="planner-main">
       <Map
-        selectedLocation={null}
+        selectedLocation={selectedLocation}
         isPlannerPage={true}
         markedWaypoint={markedWaypoint ?? undefined}
         onMapClick={handleMapClick}
+        setSelectedLocation={setSelectedLocation}
+        setMarkedWaypoint={setMarkedWaypoint}
       />
       <aside className="planner-panel">
         <h1 className="planner-title">Route Planner</h1>
+        <SearchInput onSelect={handleSelect} />
         {waypoints.length === 0 ? (
           <p className="no-locations">No locations added yet</p>
         ) : (

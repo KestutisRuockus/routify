@@ -52,7 +52,7 @@ export const Home = () => {
     <main className="home-main">
       <h1 className="home-title">Find your destination</h1>
       <SearchInput
-        setSelectedLocation={setSelectedLocation}
+        onSelect={setSelectedLocation}
         selectedLocationName={selectedLocation?.name}
       />
       {selectedLocation && (
